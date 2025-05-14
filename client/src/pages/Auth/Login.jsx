@@ -19,10 +19,12 @@ const Login = () => {
 
     if(!validateEmail(email)){
       setError('Please enter a valid email address.');
+      return;
     }
 
     if(!password){
       setError('Please enter the password');
+      return;
     }
     
     // login API call
