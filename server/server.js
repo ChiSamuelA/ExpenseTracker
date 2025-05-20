@@ -5,6 +5,10 @@ const path = require('path');
 const connectDB = require('./config/db')
 const authRoutes = require('./routes/authRoutes')
 
+// swagger config
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 const app = express();
 
 app.use(express.json());
@@ -20,7 +24,22 @@ app.use(
 
 app.use(express.json());
 
-connectDB()
+connectDB();
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Expense Tracker API',
+            version: '1.0.0',
+            description: 'API documentation for Expense Tracker'
+        },
+    },
+    apis: ['./routes/*.js'],
+}
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/v1/auth', authRoutes);
 
