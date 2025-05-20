@@ -27,7 +27,7 @@ const router = express.Router();
  *                 type: string
  *               password:
  *                 type: string
- *              profileImageUrl:
+ *               profileImageUrl:
  *                 type: string
  *     responses:
  *       201:
