@@ -6,6 +6,7 @@ const {
     loginUser,
     getUserInfo
 } = require('../controllers/authController');
+const upload = require('../middleware/uploadMiddleware');
 
 const router = express.Router();
 
@@ -93,5 +94,48 @@ router.post('/login', loginUser);
  *         description: Unauthorized
  */
 router.get('/getUser', protect, getUserInfo);
+
+/**
+ * @swagger
+ * /api/v1/upload-image:
+ *   post:
+ *     summary: Upload an image file
+ *     tags:
+ *       - Upload
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Image uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 imageUrl:
+ *                   type: string
+ *       400:
+ *         description: No file uploaded
+ */
+router.post('/upload-image', upload.single('image'), (req, res) => {
+    if(!req.file){
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+    res.status(200).json({
+        message: 'Image uploaded successfully',
+        imageUrl
+    })
+})
 
 module.exports = router;
