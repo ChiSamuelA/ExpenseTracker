@@ -28,15 +28,29 @@ connectDB();
 
 const swaggerOptions = {
     definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Expense Tracker API',
-            version: '1.0.0',
-            description: 'API documentation for Expense Tracker'
-        },
+      openapi: '3.0.0',
+      info: {
+        title: 'Expense Tracker API',
+        version: '1.0.0',
+        description: 'API documentation for Expense Tracker'
+      },
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+          }
+        }
+      },
+      security: [
+        {
+          bearerAuth: []
+        }
+      ]
     },
     apis: ['./routes/*.js'],
-}
+  };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

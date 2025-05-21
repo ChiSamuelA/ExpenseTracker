@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const { protect } = require('../middleware/authMiddleware');
 
 const {
     registerUser,
@@ -63,6 +64,34 @@ router.post('/register', registerUser);
  */
 router.post('/login', loginUser);
 
-// router.get('/getUser', protect, getUserInfo);
+/**
+ * @swagger
+ * /api/v1/auth/getUser:
+ *   get:
+ *     summary: Get user information
+ *     tags:
+ *       - Auth
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User information retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 fullName:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 profileImageUrl:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/getUser', protect, getUserInfo);
 
 module.exports = router;

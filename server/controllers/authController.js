@@ -65,4 +65,18 @@ exports.loginUser = async (req, res) => {
     }
 }
 // get user information
-exports.getUserInfo = async (req, res) => {}
+exports.getUserInfo = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+
+        if(!user){
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res
+            .status(500)
+            .json({ message: 'Error getting user information', error: err.message });
+    }
+}
