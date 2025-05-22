@@ -91,12 +91,25 @@ jobs:
           cd server
           npm install
 
-      - name: Simulate Production Startup
+      - name: Start Server and Run Health Check
         run: |
           cd server
           node server.js &
+          SERVER_PID=$!
           sleep 5
-          kill %1
+          
+          # Check server response (fail if not 2xx)
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/api-docs)
+          echo "Status: $STATUS"
+
+          if [ "$STATUS" -ne 200 ]; then
+            echo "❌ Server failed to start or /api-docs not responding!"
+            kill $SERVER_PID
+            exit 1
+          fi
+
+          echo "✅ Server started successfully!"
+          kill $SERVER_PID
 
   deploy:
     name: 🚀 Deploy to Render
