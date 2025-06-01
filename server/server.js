@@ -57,7 +57,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/auth', incomeRoutes);
+app.use('/api/v1/income', incomeRoutes);
 
 // serve uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
