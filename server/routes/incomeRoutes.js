@@ -46,8 +46,50 @@ const router = express.Router();
  */
 router.post('/add-income', protect, addIncome);
 
+/**
+ * @swagger
+ * /api/v1/income/all-incomes:
+ *   get:
+ *     summary: Get all income entries for the authenticated user
+ *     tags:
+ *       - Income
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of income entries retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 incomes:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       source:
+ *                         type: string
+ *                       amount:
+ *                         type: number
+ *                       date:
+ *                         type: string
+ *                         format: date-time
+ *                       icon:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *       401:
+ *         description: Unauthorized – missing or invalid token
+ */
+router.get('/all-incomes', protect, getAllIncomes);
 
-router.get('/all', protect, getAllIncomes);
+
 router.delete(':id', protect, deleteIncome);
 router.get('/downloadexcel', protect, downloadIncomeExcel);
 
