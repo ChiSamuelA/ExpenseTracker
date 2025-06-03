@@ -89,8 +89,40 @@ router.post('/add-income', protect, addIncome);
  */
 router.get('/all-incomes', protect, getAllIncomes);
 
+/**
+ * @swagger
+ * /api/v1/income/{id}:
+ *   delete:
+ *     summary: Delete an income by ID
+ *     tags:
+ *       - Income
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the income to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Income deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Income not found
+ */
+router.delete('/income/:id', protect, deleteIncome);
 
-router.delete(':id', protect, deleteIncome);
+
 router.get('/downloadexcel', protect, downloadIncomeExcel);
 
 module.exports = router;

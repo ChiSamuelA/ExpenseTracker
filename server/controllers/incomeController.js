@@ -49,7 +49,19 @@ exports.getAllIncomes = async (req, res) => {
 }
 
 // delete income
-exports.deleteIncome = async (req, res) => {}
+exports.deleteIncome = async (req, res) => {
+    try {
+        await Income.findByIdAndDelete(req.params.id);
+        res.json({
+            message: "Income Successfully Deleted"
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error Deleting Income',
+            error: error.message
+        })
+    }
+}
 
 // download income excel
 exports.downloadIncomeExcel = async (req, res) => {}
