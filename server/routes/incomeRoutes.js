@@ -122,7 +122,28 @@ router.get('/all-incomes', protect, getAllIncomes);
  */
 router.delete('/:id', protect, deleteIncome);
 
-
+/**
+ * @swagger
+ * /api/v1/income/downloadexcel:
+ *   get:
+ *     summary: Download all incomes as an Excel file
+ *     tags:
+ *       - Income
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Excel file download initiated
+ *         content:
+ *           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error while generating Excel file
+ */
 router.get('/downloadexcel', protect, downloadIncomeExcel);
 
 module.exports = router;
