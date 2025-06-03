@@ -120,7 +120,7 @@ router.get('/all-incomes', protect, getAllIncomes);
  *       404:
  *         description: Income not found
  */
-router.delete('/income/:id', protect, deleteIncome);
+router.delete('/:id', protect, deleteIncome);
 
 
 router.get('/downloadexcel', protect, downloadIncomeExcel);
