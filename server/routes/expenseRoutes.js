@@ -69,6 +69,7 @@ const router = express.Router();
  */
 router.post('/add-expense', protect, addExpense);
 
+
 // router.get('/all-expenses', protect, getAllExpenses);
 
 // router.delete('/:id', protect, deleteExpense);
