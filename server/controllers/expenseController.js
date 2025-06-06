@@ -63,37 +63,37 @@ exports.deleteExpense = async (req, res) => {
     }
 }
 
-// // download income excel
-// exports.downloadIncomeExcel = async (req, res) => {
-//     const userId = req.user.id;
+// // download expense excel
+exports.downloadExpenseExcel = async (req, res) => {
+    const userId = req.user.id;
 
-//     try {
-//         const income = await Income.find({ userId }).sort({ date: -1 });
+    try {
+        const expense = await Expense.find({ userId }).sort({ date: -1 });
 
-//         const data = income.map((item) => ({
-//             Source: item.source,
-//             Amount: item.amount,
-//             Date: item.date.toISOString().split('T')[0],
-//         }));
+        const data = expense.map((item) => ({
+            Category: item.category,
+            Amount: item.amount,
+            Date: item.date.toISOString().split('T')[0],
+        }));
 
-//         const wb = xlsx.utils.book_new();
-//         const ws = xlsx.utils.json_to_sheet(data);
-//         xlsx.utils.book_append_sheet(wb, ws, "Income");
+        const wb = xlsx.utils.book_new();
+        const ws = xlsx.utils.json_to_sheet(data);
+        xlsx.utils.book_append_sheet(wb, ws, "Expense");
 
-//         // Write workbook to buffer instead of disk
-//         const buffer = xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
+        // Write workbook to buffer instead of disk
+        const buffer = xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
 
-//         // Set response headers
-//         res.setHeader('Content-Disposition', 'attachment; filename="income_details.xlsx"');
-//         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // Set response headers
+        res.setHeader('Content-Disposition', 'attachment; filename="expense_details.xlsx"');
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-//         // Send buffer directly
-//         return res.send(buffer);
+        // Send buffer directly
+        return res.send(buffer);
 
-//     } catch (error) {
-//         res.status(500).json({
-//             message: 'Error Downloading Income Details',
-//             error: error.message
-//         });
-//     }
-// };
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error Downloading Expense Details',
+            error: error.message
+        });
+    }
+};

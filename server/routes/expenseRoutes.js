@@ -142,6 +142,29 @@ router.get('/all-expenses', protect, getAllExpenses);
 
 router.delete('/:id', protect, deleteExpense);
 
-// router.get('/downloadexcel', protect, downloadExpenseExcel);
+/**
+ * @swagger
+ * /api/v1/expenses/downloadexcel:
+ *   get:
+ *     summary: Download user's expenses as an Excel file
+ *     tags:
+ *       - Expenses
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Excel file containing expense data
+ *         content:
+ *           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       401:
+ *         description: Unauthorized - token missing or invalid
+ *       500:
+ *         description: Error generating or downloading the Excel file
+ */
+
+router.get('/downloadexcel', protect, downloadExpenseExcel);
 
 module.exports = router;
