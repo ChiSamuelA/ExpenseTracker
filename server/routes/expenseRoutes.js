@@ -108,7 +108,39 @@ router.post('/add-expense', protect, addExpense);
  */
 router.get('/all-expenses', protect, getAllExpenses);
 
-// router.delete('/:id', protect, deleteExpense);
+/**
+ * @swagger
+ * /api/v1/expenses/{id}:
+ *   delete:
+ *     summary: Delete a specific expense by ID
+ *     tags:
+ *       - Expenses
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the expense to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Expense successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized - token missing or invalid
+ *       500:
+ *         description: Error deleting expense
+ */
+
+router.delete('/:id', protect, deleteExpense);
 
 // router.get('/downloadexcel', protect, downloadExpenseExcel);
 
