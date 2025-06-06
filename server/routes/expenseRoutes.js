@@ -69,8 +69,44 @@ const router = express.Router();
  */
 router.post('/add-expense', protect, addExpense);
 
-
-// router.get('/all-expenses', protect, getAllExpenses);
+/**
+ * @swagger
+ * /api/v1/expenses/all-expenses:
+ *   get:
+ *     summary: Get all expenses for the authenticated user
+ *     tags:
+ *       - Expenses
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of expense records
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   userId:
+ *                     type: string
+ *                   icon:
+ *                     type: string
+ *                   category:
+ *                     type: string
+ *                   amount:
+ *                     type: number
+ *                   date:
+ *                     type: string
+ *                     format: date
+ *       401:
+ *         description: Unauthorized - token missing or invalid
+ *       500:
+ *         description: Server error
+ */
+router.get('/all-expenses', protect, getAllExpenses);
 
 // router.delete('/:id', protect, deleteExpense);
 
