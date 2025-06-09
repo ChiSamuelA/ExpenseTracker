@@ -75,7 +75,7 @@ router.post('/add-expense', protect, addExpense);
  *   get:
  *     summary: Get all expenses for the authenticated user
  *     tags:
- *       - Expenses
+ *       - Expense
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -114,7 +114,7 @@ router.get('/all-expenses', protect, getAllExpenses);
  *   delete:
  *     summary: Delete a specific expense by ID
  *     tags:
- *       - Expenses
+ *       - Expense
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -148,7 +148,7 @@ router.delete('/:id', protect, deleteExpense);
  *   get:
  *     summary: Download user's expenses as an Excel file
  *     tags:
- *       - Expenses
+ *       - Expense
  *     security:
  *       - bearerAuth: []
  *     responses:
